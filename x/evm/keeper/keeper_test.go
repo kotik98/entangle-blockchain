@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"math"
 	"math/big"
+	"os"
 	"testing"
 	"time"
 
@@ -15,6 +16,7 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
 
+	feemarkettypes "github.com/Entangle-Protocol/entangle-blockchain/x/feemarket/types"
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
@@ -24,18 +26,17 @@ import (
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
-	feemarkettypes "github.com/evmos/ethermint/x/feemarket/types"
 	tmjson "github.com/tendermint/tendermint/libs/json"
 
-	"github.com/evmos/ethermint/app"
-	"github.com/evmos/ethermint/crypto/ethsecp256k1"
-	"github.com/evmos/ethermint/encoding"
-	"github.com/evmos/ethermint/server/config"
-	"github.com/evmos/ethermint/tests"
-	ethermint "github.com/evmos/ethermint/types"
-	"github.com/evmos/ethermint/x/evm/statedb"
-	"github.com/evmos/ethermint/x/evm/types"
-	evmtypes "github.com/evmos/ethermint/x/evm/types"
+	"github.com/Entangle-Protocol/entangle-blockchain/app"
+	"github.com/Entangle-Protocol/entangle-blockchain/crypto/ethsecp256k1"
+	"github.com/Entangle-Protocol/entangle-blockchain/encoding"
+	"github.com/Entangle-Protocol/entangle-blockchain/server/config"
+	"github.com/Entangle-Protocol/entangle-blockchain/tests"
+	ethermint "github.com/Entangle-Protocol/entangle-blockchain/types"
+	"github.com/Entangle-Protocol/entangle-blockchain/x/evm/statedb"
+	"github.com/Entangle-Protocol/entangle-blockchain/x/evm/types"
+	evmtypes "github.com/Entangle-Protocol/entangle-blockchain/x/evm/types"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
@@ -77,6 +78,9 @@ type KeeperTestSuite struct {
 var s *KeeperTestSuite
 
 func TestKeeperTestSuite(t *testing.T) {
+	if os.Getenv("benchmark") != "" {
+		t.Skip("Skipping Gingko Test")
+	}
 	s = new(KeeperTestSuite)
 	s.enableFeemarket = false
 	s.enableLondonHF = true
@@ -93,9 +97,18 @@ func (suite *KeeperTestSuite) SetupTest() {
 	suite.SetupApp(checkTx)
 }
 
-// SetupApp setup test environment, it uses`require.TestingT` to support both `testing.T` and `testing.B`.
+func (suite *KeeperTestSuite) SetupTestWithT(t require.TestingT) {
+	checkTx := false
+	suite.app = app.Setup(checkTx, nil)
+	suite.SetupAppWithT(checkTx, t)
+}
+
 func (suite *KeeperTestSuite) SetupApp(checkTx bool) {
-	t := suite.T()
+	suite.SetupAppWithT(checkTx, suite.T())
+}
+
+// SetupApp setup test environment, it uses`require.TestingT` to support both `testing.T` and `testing.B`.
+func (suite *KeeperTestSuite) SetupAppWithT(checkTx bool, t require.TestingT) {
 	// account key, use a constant account to keep unit test deterministic.
 	ecdsaPriv, err := crypto.HexToECDSA("b71c71a67e1177ad4e901695e1b4b9ee17ae16c6668d313eac2f96dbcda3f291")
 	require.NoError(t, err)
@@ -126,6 +139,8 @@ func (suite *KeeperTestSuite) SetupApp(checkTx bool) {
 			evmGenesis.Params.ChainConfig.ArrowGlacierBlock = &maxInt
 			evmGenesis.Params.ChainConfig.GrayGlacierBlock = &maxInt
 			evmGenesis.Params.ChainConfig.MergeNetsplitBlock = &maxInt
+			evmGenesis.Params.ChainConfig.ShanghaiBlock = &maxInt
+			evmGenesis.Params.ChainConfig.CancunBlock = &maxInt
 			genesis[types.ModuleName] = app.AppCodec().MustMarshalJSON(evmGenesis)
 		}
 		return genesis
@@ -478,10 +493,8 @@ func (suite *KeeperTestSuite) TestGetAccountStorage() {
 				i++
 				return false
 			})
-
 		})
 	}
-
 }
 
 func (suite *KeeperTestSuite) TestGetAccountOrEmpty() {
@@ -518,7 +531,6 @@ func (suite *KeeperTestSuite) TestGetAccountOrEmpty() {
 			} else {
 				suite.Require().NotEqual(empty, res)
 			}
-
 		})
 	}
 }

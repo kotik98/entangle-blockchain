@@ -1,3 +1,18 @@
+// Copyright 2021 Evmos Foundation
+// This file is part of Evmos' Ethermint library.
+//
+// The Ethermint library is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// The Ethermint library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public License
+// along with the Ethermint library. If not, see https://github.com/Entangle-Protocol/entangle-blockchain/blob/main/LICENSE
 package backend
 
 import (
@@ -5,8 +20,12 @@ import (
 	"math/big"
 	"time"
 
+	// "github.com/Entangle-Protocol/entangle-blockchain/crypto/hd"
+	rpctypes "github.com/Entangle-Protocol/entangle-blockchain/rpc/types"
+	"github.com/Entangle-Protocol/entangle-blockchain/server/config"
+	ethermint "github.com/Entangle-Protocol/entangle-blockchain/types"
+	evmtypes "github.com/Entangle-Protocol/entangle-blockchain/x/evm/types"
 	"github.com/cosmos/cosmos-sdk/client"
-	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/crypto/keyring"
 	"github.com/cosmos/cosmos-sdk/server"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -16,12 +35,8 @@ import (
 	"github.com/ethereum/go-ethereum/params"
 	"github.com/ethereum/go-ethereum/rpc"
 	"github.com/ethereum/go-ethereum/signer/core/apitypes"
-	"github.com/evmos/ethermint/crypto/hd"
-	rpctypes "github.com/evmos/ethermint/rpc/types"
-	"github.com/evmos/ethermint/server/config"
-	ethermint "github.com/evmos/ethermint/types"
-	evmtypes "github.com/evmos/ethermint/x/evm/types"
-	"github.com/spf13/viper"
+
+	// "github.com/spf13/viper"
 	"github.com/tendermint/tendermint/libs/log"
 	tmrpctypes "github.com/tendermint/tendermint/rpc/core/types"
 )
@@ -160,23 +175,6 @@ func NewBackend(
 	appConf, err := config.GetConfig(ctx.Viper)
 	if err != nil {
 		panic(err)
-	}
-
-	algos, _ := clientCtx.Keyring.SupportedAlgorithms()
-	if !algos.Contains(hd.EthSecp256k1) {
-		kr, err := keyring.New(
-			sdk.KeyringServiceName(),
-			viper.GetString(flags.FlagKeyringBackend),
-			clientCtx.KeyringDir,
-			clientCtx.Input,
-			clientCtx.Codec,
-			hd.EthSecp256k1Option(),
-		)
-		if err != nil {
-			panic(err)
-		}
-
-		clientCtx = clientCtx.WithKeyring(kr)
 	}
 
 	return &Backend{

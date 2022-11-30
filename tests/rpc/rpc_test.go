@@ -1,7 +1,7 @@
 // This is a test utility for Ethermint's Web3 JSON-RPC services.
 //
-// To run these tests please first ensure you have the ethermintd running
-// and have started the RPC service with `ethermintd rest-server`.
+// To run these tests please first ensure you have the entangled running
+// and have started the RPC service with `entangled rest-server`.
 //
 // You can configure the desired HOST and MODE as well
 package rpc
@@ -17,9 +17,9 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	rpctypes "github.com/evmos/ethermint/rpc/types"
-	ethermint "github.com/evmos/ethermint/types"
-	evmtypes "github.com/evmos/ethermint/x/evm/types"
+	rpctypes "github.com/Entangle-Protocol/entangle-blockchain/rpc/types"
+	ethermint "github.com/Entangle-Protocol/entangle-blockchain/types"
+	evmtypes "github.com/Entangle-Protocol/entangle-blockchain/x/evm/types"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
@@ -595,8 +595,8 @@ func TestEth_FeeHistory(t *testing.T) {
 	baseFeePerGas := info["baseFeePerGas"].([]interface{})
 	gasUsedRatio := info["gasUsedRatio"].([]interface{})
 
-	require.Equal(t, info["oldestBlock"].(string), "0x6")
+	require.Equal(t, info["oldestBlock"].(string), "0x7")
 	require.Equal(t, 4, len(gasUsedRatio))
-	require.Equal(t, 4, len(baseFeePerGas))
+	require.Equal(t, 5, len(baseFeePerGas))
 	require.Equal(t, 4, len(reward))
 }

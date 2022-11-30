@@ -5,7 +5,8 @@ import requests
 from dateutil.parser import isoparse
 from pystarport.utils import build_cli_args_safe, interact
 
-DEFAULT_GAS_PRICE = "5000000000000aphoton"
+DEFAULT_GAS_PRICE = "5000000000000aNGL"
+DEFAULT_GAS = "250000"
 
 
 class ChainCommand:
@@ -95,6 +96,11 @@ class CosmosCLI:
     def validate_genesis(self):
         return self.raw("validate-genesis", home=self.data_dir)
 
+    def consensus_address(self):
+        "get tendermint consensus address"
+        output = self.raw("tendermint", "show-address", home=self.data_dir)
+        return output.decode().strip()
+
     def add_genesis_account(self, addr, coins, **kwargs):
         return self.raw(
             "add-genesis-account",
@@ -134,7 +140,7 @@ class CosmosCLI:
             self.raw("query", "bank", "balances", addr, home=self.data_dir)
         )["balances"]
 
-    def balance(self, addr, denom="aphoton"):
+    def balance(self, addr, denom="aNGL"):
         denoms = {coin["denom"]: int(coin["amount"]) for coin in self.balances(addr)}
         return denoms.get(denom, 0)
 
@@ -631,13 +637,14 @@ class CosmosCLI:
         )
 
     def gov_propose(self, proposer, kind, proposal, **kwargs):
+        method = "submit-proposal"
         kwargs.setdefault("gas_prices", DEFAULT_GAS_PRICE)
         if kind == "software-upgrade":
             return json.loads(
                 self.raw(
                     "tx",
                     "gov",
-                    "submit-proposal",
+                    method,
                     kind,
                     proposal["name"],
                     "-y",
@@ -659,7 +666,7 @@ class CosmosCLI:
                 self.raw(
                     "tx",
                     "gov",
-                    "submit-proposal",
+                    method,
                     kind,
                     "-y",
                     from_=proposer,
@@ -680,7 +687,7 @@ class CosmosCLI:
                     self.raw(
                         "tx",
                         "gov",
-                        "submit-proposal",
+                        method,
                         kind,
                         fp.name,
                         "-y",

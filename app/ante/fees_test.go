@@ -4,12 +4,12 @@ import (
 	"math/big"
 
 	sdkmath "cosmossdk.io/math"
+	"github.com/Entangle-Protocol/entangle-blockchain/app/ante"
+	"github.com/Entangle-Protocol/entangle-blockchain/tests"
+	evmtypes "github.com/Entangle-Protocol/entangle-blockchain/x/evm/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
-	"github.com/evmos/ethermint/app/ante"
-	"github.com/evmos/ethermint/tests"
-	evmtypes "github.com/evmos/ethermint/x/evm/types"
 )
 
 var execTypes = []struct {
@@ -42,7 +42,7 @@ func (s AnteTestSuite) TestMinGasPriceDecorator() {
 				return &invalidTx{}
 			},
 			false,
-			"must be a FeeTx",
+			"invalid transaction type",
 			false,
 		},
 		{
@@ -344,4 +344,8 @@ func (s AnteTestSuite) TestEthMinGasPriceDecorator() {
 			})
 		}
 	}
+}
+
+func (suite AnteTestSuite) TestEthMempoolFeeDecorator() {
+	// TODO: add test
 }

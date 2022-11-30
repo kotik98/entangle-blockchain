@@ -4,6 +4,38 @@
 
 ## Table of Contents
 
+- [entangle/distributorsauth/distributorsauth.proto](#entangle/distributorsauth/distributorsauth.proto)
+    - [AddDistributorProposal](#entangle.distributorsauth.AddDistributorProposal)
+    - [Admin](#entangle.distributorsauth.Admin)
+    - [DistributorInfo](#entangle.distributorsauth.DistributorInfo)
+  
+- [entangle/distributorsauth/genesis.proto](#entangle/distributorsauth/genesis.proto)
+    - [GenesisState](#entangle.distributorsauth.GenesisState)
+  
+- [entangle/distributorsauth/query.proto](#entangle/distributorsauth/query.proto)
+    - [QueryAdminRequest](#entangle.distributorsauth.QueryAdminRequest)
+    - [QueryAdminResponse](#entangle.distributorsauth.QueryAdminResponse)
+    - [QueryAdminsRequest](#entangle.distributorsauth.QueryAdminsRequest)
+    - [QueryAdminsResponse](#entangle.distributorsauth.QueryAdminsResponse)
+    - [QueryDistributorRequest](#entangle.distributorsauth.QueryDistributorRequest)
+    - [QueryDistributorResponse](#entangle.distributorsauth.QueryDistributorResponse)
+    - [QueryDistributorsRequest](#entangle.distributorsauth.QueryDistributorsRequest)
+    - [QueryDistributorsResponse](#entangle.distributorsauth.QueryDistributorsResponse)
+  
+    - [Query](#entangle.distributorsauth.Query)
+  
+- [entangle/distributorsauth/tx.proto](#entangle/distributorsauth/tx.proto)
+    - [MsgAddAdmin](#entangle.distributorsauth.MsgAddAdmin)
+    - [MsgAddAdminResponse](#entangle.distributorsauth.MsgAddAdminResponse)
+    - [MsgAddDistributor](#entangle.distributorsauth.MsgAddDistributor)
+    - [MsgAddDistributorResponse](#entangle.distributorsauth.MsgAddDistributorResponse)
+    - [MsgRemoveAdmin](#entangle.distributorsauth.MsgRemoveAdmin)
+    - [MsgRemoveAdminResponse](#entangle.distributorsauth.MsgRemoveAdminResponse)
+    - [MsgRemoveDistributor](#entangle.distributorsauth.MsgRemoveDistributor)
+    - [MsgRemoveDistributorResponse](#entangle.distributorsauth.MsgRemoveDistributorResponse)
+  
+    - [Msg](#entangle.distributorsauth.Msg)
+  
 - [ethermint/crypto/v1/ethsecp256k1/keys.proto](#ethermint/crypto/v1/ethsecp256k1/keys.proto)
     - [PrivKey](#ethermint.crypto.v1.ethsecp256k1.PrivKey)
     - [PubKey](#ethermint.crypto.v1.ethsecp256k1.PubKey)
@@ -89,6 +121,382 @@
     - [ExtensionOptionsWeb3Tx](#ethermint.types.v1.ExtensionOptionsWeb3Tx)
   
 - [Scalar Value Types](#scalar-value-types)
+
+
+
+<a name="entangle/distributorsauth/distributorsauth.proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## entangle/distributorsauth/distributorsauth.proto
+
+
+
+<a name="entangle.distributorsauth.AddDistributorProposal"></a>
+
+### AddDistributorProposal
+AddDistributorProposal 
+with a deposit
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| `title` | [string](#string) |  |  |
+| `description` | [string](#string) |  |  |
+| `address` | [string](#string) |  |  |
+| `end_date` | [string](#string) |  |  |
+| `deposit` | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="entangle.distributorsauth.Admin"></a>
+
+### Admin
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| `address` | [string](#string) |  |  |
+| `edit_option` | [bool](#bool) |  |  |
+
+
+
+
+
+
+<a name="entangle.distributorsauth.DistributorInfo"></a>
+
+### DistributorInfo
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| `Address` | [string](#string) |  |  |
+| `end_date` | [uint64](#uint64) |  |  |
+
+
+
+
+
+ <!-- end messages -->
+
+ <!-- end enums -->
+
+ <!-- end HasExtensions -->
+
+ <!-- end services -->
+
+
+
+<a name="entangle/distributorsauth/genesis.proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## entangle/distributorsauth/genesis.proto
+
+
+
+<a name="entangle.distributorsauth.GenesisState"></a>
+
+### GenesisState
+GenesisState defines the distributorsauth module's genesis state.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| `admins` | [Admin](#entangle.distributorsauth.Admin) | repeated | Admins list |
+| `distributors` | [DistributorInfo](#entangle.distributorsauth.DistributorInfo) | repeated | Distributors list |
+
+
+
+
+
+ <!-- end messages -->
+
+ <!-- end enums -->
+
+ <!-- end HasExtensions -->
+
+ <!-- end services -->
+
+
+
+<a name="entangle/distributorsauth/query.proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## entangle/distributorsauth/query.proto
+
+
+
+<a name="entangle.distributorsauth.QueryAdminRequest"></a>
+
+### QueryAdminRequest
+QueryAdminRequest is response type for the Query/Admin RPC method
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| `admin_addr` | [string](#string) |  | admin_addr defines the admin address to query for. |
+
+
+
+
+
+
+<a name="entangle.distributorsauth.QueryAdminResponse"></a>
+
+### QueryAdminResponse
+QueryAdminResponse is response type for the Query/Admin RPC method
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| `admin` | [Admin](#entangle.distributorsauth.Admin) |  | admin defines the admin info. |
+
+
+
+
+
+
+<a name="entangle.distributorsauth.QueryAdminsRequest"></a>
+
+### QueryAdminsRequest
+QueryAdminsRequest is request type for Query/Admns RPC method.
+
+
+
+
+
+
+<a name="entangle.distributorsauth.QueryAdminsResponse"></a>
+
+### QueryAdminsResponse
+QueryAdminsResponse is response type for the Query/Admins RPC method
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| `admins` | [Admin](#entangle.distributorsauth.Admin) | repeated | admins contains all the queried admins. |
+
+
+
+
+
+
+<a name="entangle.distributorsauth.QueryDistributorRequest"></a>
+
+### QueryDistributorRequest
+QueryDistributorRequest is response type for the Query/Distributor RPC method
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| `distributor_addr` | [string](#string) |  | distributor_addr defines the distributor address to query for. |
+
+
+
+
+
+
+<a name="entangle.distributorsauth.QueryDistributorResponse"></a>
+
+### QueryDistributorResponse
+QueryDistributorResponse is response type for the Query/Distributor RPC method
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| `distributor` | [DistributorInfo](#entangle.distributorsauth.DistributorInfo) |  | distributor defines the distributor info. |
+
+
+
+
+
+
+<a name="entangle.distributorsauth.QueryDistributorsRequest"></a>
+
+### QueryDistributorsRequest
+QueryDistributorsRequest is request type for Query/Distributors RPC method.
+
+
+
+
+
+
+<a name="entangle.distributorsauth.QueryDistributorsResponse"></a>
+
+### QueryDistributorsResponse
+QueryDistributorsResponse is response type for the Query/Distributors RPC method
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| `distributors` | [DistributorInfo](#entangle.distributorsauth.DistributorInfo) | repeated | distributors contains all the queried distributors. |
+
+
+
+
+
+ <!-- end messages -->
+
+ <!-- end enums -->
+
+ <!-- end HasExtensions -->
+
+
+<a name="entangle.distributorsauth.Query"></a>
+
+### Query
+Query defines the gRPC querier service.
+
+| Method Name | Request Type | Response Type | Description | HTTP Verb | Endpoint |
+| ----------- | ------------ | ------------- | ------------| ------- | -------- |
+| `Distributors` | [QueryDistributorsRequest](#entangle.distributorsauth.QueryDistributorsRequest) | [QueryDistributorsResponse](#entangle.distributorsauth.QueryDistributorsResponse) | Queries distributor info for all distributors | GET|/entangle-blockchain/distributors|
+| `Distributor` | [QueryDistributorRequest](#entangle.distributorsauth.QueryDistributorRequest) | [QueryDistributorResponse](#entangle.distributorsauth.QueryDistributorResponse) | Queries distributor info for given distributor address. | GET|/entangle-blockchain/{distributor_addr}/distributor|
+| `Admins` | [QueryAdminsRequest](#entangle.distributorsauth.QueryAdminsRequest) | [QueryAdminsResponse](#entangle.distributorsauth.QueryAdminsResponse) | Queries admin info for all admins | GET|/entangle-blockchain/admins|
+| `Admin` | [QueryAdminRequest](#entangle.distributorsauth.QueryAdminRequest) | [QueryAdminResponse](#entangle.distributorsauth.QueryAdminResponse) | Queries admin info for given admin address. | GET|/entangle-blockchain/{admin_addr}/admin|
+
+ <!-- end services -->
+
+
+
+<a name="entangle/distributorsauth/tx.proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## entangle/distributorsauth/tx.proto
+
+
+
+<a name="entangle.distributorsauth.MsgAddAdmin"></a>
+
+### MsgAddAdmin
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| `sender` | [string](#string) |  |  |
+| `admin_address` | [string](#string) |  |  |
+| `edit_option` | [bool](#bool) |  |  |
+
+
+
+
+
+
+<a name="entangle.distributorsauth.MsgAddAdminResponse"></a>
+
+### MsgAddAdminResponse
+MsgSendResponse defines the Msg/Send response type.
+
+
+
+
+
+
+<a name="entangle.distributorsauth.MsgAddDistributor"></a>
+
+### MsgAddDistributor
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| `sender` | [string](#string) |  | bytes sender = 1 [(gogoproto.casttype) = "github.com/cosmos/cosmos-sdk/types.AccAddress"]; option (gogoproto.goproto_getters) = false; this line is used by starport scaffolding # proto/tx/rpc authority is the address of the governance account. |
+| `distributor_address` | [string](#string) |  |  |
+| `end_date` | [uint64](#uint64) |  |  |
+
+
+
+
+
+
+<a name="entangle.distributorsauth.MsgAddDistributorResponse"></a>
+
+### MsgAddDistributorResponse
+MsgSendResponse defines the Msg/Send response type.
+
+
+
+
+
+
+<a name="entangle.distributorsauth.MsgRemoveAdmin"></a>
+
+### MsgRemoveAdmin
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| `sender` | [string](#string) |  |  |
+| `admin_address` | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="entangle.distributorsauth.MsgRemoveAdminResponse"></a>
+
+### MsgRemoveAdminResponse
+MsgSendResponse defines the Msg/Send response type.
+
+
+
+
+
+
+<a name="entangle.distributorsauth.MsgRemoveDistributor"></a>
+
+### MsgRemoveDistributor
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| `sender` | [string](#string) |  |  |
+| `distributor_address` | [string](#string) |  | option (gogoproto.goproto_getters) = false; this line is used by starport scaffolding # proto/tx/rpc authority is the address of the governance account.
+
+this line is used by starport scaffolding # proto/tx/message |
+
+
+
+
+
+
+<a name="entangle.distributorsauth.MsgRemoveDistributorResponse"></a>
+
+### MsgRemoveDistributorResponse
+MsgSendResponse defines the Msg/Send response type.
+
+
+
+
+
+ <!-- end messages -->
+
+ <!-- end enums -->
+
+ <!-- end HasExtensions -->
+
+
+<a name="entangle.distributorsauth.Msg"></a>
+
+### Msg
+Msg defines the Msg service.
+
+| Method Name | Request Type | Response Type | Description | HTTP Verb | Endpoint |
+| ----------- | ------------ | ------------- | ------------| ------- | -------- |
+| `AddDistributor` | [MsgAddDistributor](#entangle.distributorsauth.MsgAddDistributor) | [MsgAddDistributorResponse](#entangle.distributorsauth.MsgAddDistributorResponse) | Adding Distributor method | POST|/entangle/distributor/add|
+| `RemoveDistributor` | [MsgRemoveDistributor](#entangle.distributorsauth.MsgRemoveDistributor) | [MsgRemoveDistributorResponse](#entangle.distributorsauth.MsgRemoveDistributorResponse) | Remove Distributor method | POST|/entangle/distributor/remove|
+| `AddAdmin` | [MsgAddAdmin](#entangle.distributorsauth.MsgAddAdmin) | [MsgAddAdminResponse](#entangle.distributorsauth.MsgAddAdminResponse) | Adding Admin method | POST|/entangle/admin/add|
+| `RemoveAdmin` | [MsgRemoveAdmin](#entangle.distributorsauth.MsgRemoveAdmin) | [MsgRemoveAdminResponse](#entangle.distributorsauth.MsgRemoveAdminResponse) | Remove Admin method | POST|/entangle/admin/remove|
+
+ <!-- end services -->
 
 
 
@@ -275,6 +683,7 @@ TraceConfig holds extra parameters to trace functions.
 | `overrides` | [ChainConfig](#ethermint.evm.v1.ChainConfig) |  | Chain overrides, can be used to execute a trace using future fork rules |
 | `enable_memory` | [bool](#bool) |  | enable memory capture |
 | `enable_return_data` | [bool](#bool) |  | enable return data capture |
+| `tracer_json_config` | [string](#string) |  | tracer config |
 
 
 
@@ -285,7 +694,7 @@ TraceConfig holds extra parameters to trace functions.
 
 ### TransactionLogs
 TransactionLogs define the logs generated from a transaction execution
-with a given hash. It it used for import/export data as transactions are not
+with a given hash. It is used for import/export data as transactions are not
 persisted on blockchain state after an upgrade.
 
 
@@ -339,7 +748,7 @@ TxResult stores results of Tx execution.
 
 ### GenesisAccount
 GenesisAccount defines an account to be initialized in the genesis state.
-Its main difference between with Geth's GenesisAccount is that it uses a
+Its main difference with Geth's GenesisAccount is that it uses a
 custom storage type and that it doesn't contain the private key field.
 
 
@@ -414,7 +823,7 @@ AccessListTx is the data of EIP-2930 access list transactions.
 <a name="ethermint.evm.v1.DynamicFeeTx"></a>
 
 ### DynamicFeeTx
-DynamicFeeTx is the data of EIP-1559 dinamic fee transactions.
+DynamicFeeTx is the data of EIP-1559 dynamic fee transactions.
 
 
 | Field | Type | Label | Description |
@@ -425,7 +834,7 @@ DynamicFeeTx is the data of EIP-1559 dinamic fee transactions.
 | `gas_fee_cap` | [string](#string) |  | gas fee cap defines the max value for the gas fee |
 | `gas` | [uint64](#uint64) |  | gas defines the gas limit defined for the transaction. |
 | `to` | [string](#string) |  | hex formatted address of the recipient |
-| `value` | [string](#string) |  | value defines the the transaction amount. |
+| `value` | [string](#string) |  | value defines the transaction amount. |
 | `data` | [bytes](#bytes) |  | input defines the data payload bytes of the transaction. |
 | `accesses` | [AccessTuple](#ethermint.evm.v1.AccessTuple) | repeated |  |
 | `v` | [bytes](#bytes) |  | v defines the signature value |
@@ -563,6 +972,7 @@ EthCallRequest defines EthCall request
 | `args` | [bytes](#bytes) |  | same json format as the json rpc api. |
 | `gas_cap` | [uint64](#uint64) |  | the default gas cap to be used |
 | `proposer_address` | [bytes](#bytes) |  | the proposer of the requested block |
+| `chain_id` | [int64](#int64) |  | the eip155 chain id parsed from the requested block header |
 
 
 
@@ -715,7 +1125,7 @@ RPC method.
 | ----- | ---- | ----- | ----------- |
 | `cosmos_address` | [string](#string) |  | cosmos_address is the cosmos address of the account. |
 | `sequence` | [uint64](#uint64) |  | sequence is the account's sequence number. |
-| `account_number` | [uint64](#uint64) |  | account_number is the account numbert |
+| `account_number` | [uint64](#uint64) |  | account_number is the account number. |
 
 
 
@@ -793,6 +1203,7 @@ QueryTraceBlockRequest defines TraceTx request
 | `block_hash` | [string](#string) |  | block hex hash |
 | `block_time` | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | block time |
 | `proposer_address` | [bytes](#bytes) |  | the proposer of the requested block |
+| `chain_id` | [int64](#int64) |  | the eip155 chain id parsed from the requested block header |
 
 
 
@@ -829,6 +1240,7 @@ QueryTraceTxRequest defines TraceTx request
 | `block_hash` | [string](#string) |  | block hex hash of requested transaction |
 | `block_time` | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | block time of requested transaction |
 | `proposer_address` | [bytes](#bytes) |  | the proposer of the requested block |
+| `chain_id` | [int64](#int64) |  | the eip155 chain id parsed from the requested block header |
 
 
 

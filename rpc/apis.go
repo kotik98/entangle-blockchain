@@ -1,5 +1,18 @@
-// Package rpc contains RPC handler methods and utilities to start
-// Ethermint's Web3-compatibly JSON-RPC server.
+// Copyright 2021 Evmos Foundation
+// This file is part of Evmos' Ethermint library.
+//
+// The Ethermint library is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// The Ethermint library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public License
+// along with the Ethermint library. If not, see https://github.com/Entangle-Protocol/entangle-blockchain/blob/main/LICENSE
 package rpc
 
 import (
@@ -10,16 +23,16 @@ import (
 
 	"github.com/ethereum/go-ethereum/rpc"
 
-	"github.com/evmos/ethermint/rpc/backend"
-	"github.com/evmos/ethermint/rpc/namespaces/ethereum/debug"
-	"github.com/evmos/ethermint/rpc/namespaces/ethereum/eth"
-	"github.com/evmos/ethermint/rpc/namespaces/ethereum/eth/filters"
-	"github.com/evmos/ethermint/rpc/namespaces/ethereum/miner"
-	"github.com/evmos/ethermint/rpc/namespaces/ethereum/net"
-	"github.com/evmos/ethermint/rpc/namespaces/ethereum/personal"
-	"github.com/evmos/ethermint/rpc/namespaces/ethereum/txpool"
-	"github.com/evmos/ethermint/rpc/namespaces/ethereum/web3"
-	ethermint "github.com/evmos/ethermint/types"
+	"github.com/Entangle-Protocol/entangle-blockchain/rpc/backend"
+	"github.com/Entangle-Protocol/entangle-blockchain/rpc/namespaces/ethereum/debug"
+	"github.com/Entangle-Protocol/entangle-blockchain/rpc/namespaces/ethereum/eth"
+	"github.com/Entangle-Protocol/entangle-blockchain/rpc/namespaces/ethereum/eth/filters"
+	"github.com/Entangle-Protocol/entangle-blockchain/rpc/namespaces/ethereum/miner"
+	"github.com/Entangle-Protocol/entangle-blockchain/rpc/namespaces/ethereum/net"
+	"github.com/Entangle-Protocol/entangle-blockchain/rpc/namespaces/ethereum/personal"
+	"github.com/Entangle-Protocol/entangle-blockchain/rpc/namespaces/ethereum/txpool"
+	"github.com/Entangle-Protocol/entangle-blockchain/rpc/namespaces/ethereum/web3"
+	ethermint "github.com/Entangle-Protocol/entangle-blockchain/types"
 
 	rpcclient "github.com/tendermint/tendermint/rpc/jsonrpc/client"
 )

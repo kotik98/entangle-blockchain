@@ -1,5 +1,5 @@
 // This is a test utility for Ethermint's Web3 JSON-RPC services.
-// To run these tests please first ensure you have the ethermintd running
+// To run these tests please first ensure you have the entangled running
 // You can configure the desired HOST and MODE as well in integration-test-all.sh
 package rpc
 
@@ -14,7 +14,7 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/stretchr/testify/require"
 
-	rpctypes "github.com/evmos/ethermint/rpc/types"
+	rpctypes "github.com/Entangle-Protocol/entangle-blockchain/rpc/types"
 )
 
 // func TestMain(m *testing.M) {

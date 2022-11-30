@@ -1,50 +1,47 @@
 {
   dotenv: '../../../scripts/.env',
   'ethermint_9000-1': {
-    cmd: 'ethermintd',
+    cmd: 'entangled',
     'start-flags': '--trace',
     config: {
-      consensus: {
-        // larger timeout for more stable mempool tests
-        timeout_commit: '10s',
-      },
       mempool: {
         // use v1 mempool to enable tx prioritization
         version: 'v1',
       },
     },
     'app-config': {
-      'minimum-gas-prices': '0aphoton',
+      'minimum-gas-prices': '0aNGL',
       'index-events': ['ethereum_tx.ethereumTxHash'],
       'json-rpc': {
-        address: '0.0.0.0:{EVMRPC_PORT}',
-        'ws-address': '0.0.0.0:{EVMRPC_PORT_WS}',
+        address: '127.0.0.1:{EVMRPC_PORT}',
+        'ws-address': '127.0.0.1:{EVMRPC_PORT_WS}',
         api: 'eth,net,web3,debug',
         'feehistory-cap': 100,
         'block-range-cap': 10000,
         'logs-cap': 10000,
+        'fix-revert-gas-refund-height': 1,
       },
     },
     validators: [{
-      coins: '1000000000000000000stake,10000000000000000000000aphoton',
+      coins: '1000000000000000000stake,10000000000000000000000aNGL',
       staked: '1000000000000000000stake',
       mnemonic: '${VALIDATOR1_MNEMONIC}',
     }, {
-      coins: '1000000000000000000stake,10000000000000000000000aphoton',
+      coins: '1000000000000000000stake,10000000000000000000000aNGL',
       staked: '1000000000000000000stake',
       mnemonic: '${VALIDATOR2_MNEMONIC}',
     }],
     accounts: [{
       name: 'community',
-      coins: '10000000000000000000000aphoton',
+      coins: '10000000000000000000000aNGL',
       mnemonic: '${COMMUNITY_MNEMONIC}',
     }, {
       name: 'signer1',
-      coins: '20000000000000000000000aphoton',
+      coins: '20000000000000000000000aNGL',
       mnemonic: '${SIGNER1_MNEMONIC}',
     }, {
       name: 'signer2',
-      coins: '30000000000000000000000aphoton',
+      coins: '30000000000000000000000aNGL',
       mnemonic: '${SIGNER2_MNEMONIC}',
     }],
     genesis: {
@@ -57,7 +54,7 @@
       app_state: {
         evm: {
           params: {
-            evm_denom: 'aphoton',
+            evm_denom: 'aNGL',
           },
         },
         gov: {
@@ -68,7 +65,7 @@
             max_deposit_period: '10s',
             min_deposit: [
               {
-                denom: 'aphoton',
+                denom: 'aNGL',
                 amount: '1',
               },
             ],

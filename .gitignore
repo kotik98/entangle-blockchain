@@ -80,3 +80,16 @@ dependency-graph.png
 
 # OpenZeppelin contracts
 contracts/@openzeppelin/*
+imported_data/
+keys/
+entangle.pem
+logs/
+ent_env
+
+start.yml
+ansible_env.yml
+inventory
+local-compose.yml
+proposal/
+backup/
+env.yml

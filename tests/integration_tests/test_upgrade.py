@@ -55,7 +55,7 @@ def post_init(path, base_port, config):
                 {
                     "command": f"cosmovisor start --home %(here)s/node{i}",
                     "environment": (
-                        f"DAEMON_NAME=ethermintd,DAEMON_HOME=%(here)s/node{i}"
+                        f"DAEMON_NAME=entangled,DAEMON_HOME=%(here)s/node{i}"
                     ),
                 }
             )
@@ -80,7 +80,7 @@ def custom_ethermint(tmp_path_factory):
         26100,
         Path(__file__).parent / "configs/cosmovisor.jsonnet",
         post_init=post_init,
-        chain_binary=str(path / "upgrades/genesis/bin/ethermintd"),
+        chain_binary=str(path / "upgrades/genesis/bin/entangled"),
     )
 
 
@@ -92,17 +92,17 @@ def test_cosmovisor_upgrade(custom_ethermint: Ethermint):
     - check that queries on legacy blocks still works after upgrade.
     """
     cli = custom_ethermint.cosmos_cli()
-    height = cli.block_height()
-    target_height = height + 5
-    print("upgrade height", target_height)
 
     w3 = custom_ethermint.w3
-    contract = deploy_contract(w3, CONTRACTS["TestERC20A"])
+    contract, _ = deploy_contract(w3, CONTRACTS["TestERC20A"])
     old_height = w3.eth.block_number
     old_balance = w3.eth.get_balance(ADDRS["validator"], block_identifier=old_height)
     old_base_fee = w3.eth.get_block(old_height).baseFeePerGas
     old_erc20_balance = contract.caller.balanceOf(ADDRS["validator"])
     print("old values", old_height, old_balance, old_base_fee)
+
+    target_height = w3.eth.block_number + 10
+    print("upgrade height", target_height)
 
     plan_name = "integration-test-upgrade"
     rsp = cli.gov_propose(
@@ -113,14 +113,13 @@ def test_cosmovisor_upgrade(custom_ethermint: Ethermint):
             "title": "upgrade test",
             "description": "ditto",
             "upgrade-height": target_height,
-            "deposit": "10000aphoton",
+            "deposit": "10000aNGL",
         },
     )
     assert rsp["code"] == 0, rsp["raw_log"]
 
     # get proposal_id
     ev = parse_events(rsp["logs"])["submit_proposal"]
-    assert ev["proposal_type"] == "SoftwareUpgrade", rsp
     proposal_id = ev["proposal_id"]
 
     rsp = cli.gov_vote("validator", proposal_id, "yes")
@@ -136,7 +135,7 @@ def test_cosmovisor_upgrade(custom_ethermint: Ethermint):
     # update cli chain binary
     custom_ethermint.chain_binary = (
         Path(custom_ethermint.chain_binary).parent.parent.parent
-        / f"{plan_name}/bin/ethermintd"
+        / f"{plan_name}/bin/entangled"
     )
     cli = custom_ethermint.cosmos_cli()
 

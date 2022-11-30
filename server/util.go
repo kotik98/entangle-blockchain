@@ -1,3 +1,18 @@
+// Copyright 2021 Evmos Foundation
+// This file is part of Evmos' Ethermint library.
+//
+// The Ethermint library is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// The Ethermint library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public License
+// along with the Ethermint library. If not, see https://github.com/Entangle-Protocol/entangle-blockchain/blob/main/LICENSE
 package server
 
 import (
@@ -5,7 +20,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/evmos/ethermint/server/config"
+	"github.com/Entangle-Protocol/entangle-blockchain/server/config"
 	"github.com/gorilla/mux"
 	"github.com/improbable-eng/grpc-web/go/grpcweb"
 	"github.com/spf13/cobra"
@@ -15,7 +30,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/server/types"
 	"github.com/cosmos/cosmos-sdk/version"
 
-	tmcmd "github.com/tendermint/tendermint/cmd/tendermint/commands"
+	tmcmd "github.com/tendermint/tendermint/cmd/cometbft/commands"
 	tmlog "github.com/tendermint/tendermint/libs/log"
 	rpcclient "github.com/tendermint/tendermint/rpc/jsonrpc/client"
 )
@@ -23,8 +38,7 @@ import (
 // AddCommands adds server commands
 func AddCommands(
 	rootCmd *cobra.Command,
-	defaultNodeHome string,
-	appCreator types.AppCreator,
+	opts StartOptions,
 	appExport types.AppExporter,
 	addStartFlags types.ModuleInitFlags,
 ) {
@@ -42,15 +56,15 @@ func AddCommands(
 		tmcmd.ResetStateCmd,
 	)
 
-	startCmd := StartCmd(appCreator, defaultNodeHome)
+	startCmd := StartCmd(opts)
 	addStartFlags(startCmd)
 
 	rootCmd.AddCommand(
 		startCmd,
 		tendermintCmd,
-		sdkserver.ExportCmd(appExport, defaultNodeHome),
+		sdkserver.ExportCmd(appExport, opts.DefaultNodeHome),
 		version.NewVersionCommand(),
-		sdkserver.NewRollbackCmd(appCreator, defaultNodeHome),
+		sdkserver.NewRollbackCmd(opts.AppCreator, opts.DefaultNodeHome),
 
 		// custom tx indexer command
 		NewIndexTxCmd(),
@@ -60,7 +74,7 @@ func AddCommands(
 func ConnectTmWS(tmRPCAddr, tmEndpoint string, logger tmlog.Logger) *rpcclient.WSClient {
 	tmWsClient, err := rpcclient.NewWS(tmRPCAddr, tmEndpoint,
 		rpcclient.MaxReconnectAttempts(256),
-		rpcclient.ReadWait(120*time.Second),
+		rpcclient.ReadWait(5*365*24*time.Hour),
 		rpcclient.WriteWait(120*time.Second),
 		rpcclient.PingPeriod(50*time.Second),
 		rpcclient.OnReconnect(func() {

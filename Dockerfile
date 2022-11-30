@@ -4,11 +4,17 @@ FROM golang:alpine AS build-env
 ENV PACKAGES git build-base
 
 # Set working directory for the build
-WORKDIR /go/src/github.com/evmos/ethermint
+WORKDIR /node
 
 # Install dependencies
 RUN apk add --update $PACKAGES
 RUN apk add linux-headers
+
+RUN apk add go
+RUN apk add make
+
+# ARG key_password
+
 
 # Add source files
 COPY . .
@@ -17,14 +23,25 @@ COPY . .
 RUN make build
 
 # Final image
-FROM alpine:3.16.2
+FROM alpine:3.17.3
 
 # Install ca-certificates
 RUN apk add --update ca-certificates jq
-WORKDIR /
+WORKDIR /node
 
 # Copy over binaries from the build-env
-COPY --from=build-env /go/src/github.com/evmos/ethermint/build/ethermintd /usr/bin/ethermintd
+COPY --from=build-env /node/build/entangled /usr/bin/entangled
 
-# Run ethermintd by default
-CMD ["ethermintd"]
+WORKDIR /
+
+COPY . .
+
+ARG key_path="./config/env_seeds"
+COPY ${key_path} /
+
+RUN chmod +x init_validator.sh
+
+ENTRYPOINT ["/init_validator.sh"]
+
+
+

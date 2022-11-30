@@ -11,7 +11,7 @@ from web3.middleware import geth_poa_middleware
 from .cosmoscli import CosmosCLI
 from .utils import wait_for_port
 
-DEFAULT_CHAIN_BINARY = "ethermintd"
+DEFAULT_CHAIN_BINARY = "entangled"
 
 
 class Ethermint:
@@ -68,8 +68,12 @@ class Geth:
         self.w3 = w3
 
 
-def setup_ethermint(path, base_port):
-    cfg = Path(__file__).parent / "configs/default.jsonnet"
+def setup_ethermint(path, base_port, long_timeout_commit=False):
+    cfg = Path(__file__).parent / (
+        "configs/default.jsonnet"
+        if long_timeout_commit
+        else "configs/long_timeout_commit.jsonnet"
+    )
     yield from setup_custom_ethermint(path, base_port, cfg)
 
 
