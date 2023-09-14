@@ -93,3 +93,4 @@ local-compose.yml
 proposal/
 backup/
 env.yml
+backup_data*

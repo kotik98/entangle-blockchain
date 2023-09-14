@@ -36,12 +36,9 @@ WORKDIR /
 
 COPY . .
 
-ARG key_path="./config/env_seeds"
-COPY ${key_path} /
+RUN chmod +x run_node.sh
 
-RUN chmod +x init_validator.sh
-
-ENTRYPOINT ["/init_validator.sh"]
+ENTRYPOINT ["/run_node.sh"]
 
 
 
