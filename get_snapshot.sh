@@ -1,6 +1,6 @@
 #!/bin/sh
 
-FILE_NAME=backup_data21.tar.gz
+FILE_NAME=backup_data.tar.gz
 DATA_FOLDER=$HOME/.entangled/data
 
 # remove and recreate data folder
