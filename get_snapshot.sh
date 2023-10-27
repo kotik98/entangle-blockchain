@@ -15,4 +15,4 @@ curl -L -o $FILE_NAME https://entangle-public.s3.amazonaws.com/$FILE_NAME
 tar -xzvf $FILE_NAME -C $DATA_FOLDER
 
 # remove archive
-# rm $FILE_NAME
+rm $FILE_NAME
