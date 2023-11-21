@@ -44,7 +44,7 @@ Ethermint is a scalable and interoperable Ethereum library, built on Proof-of-St
 
 ## Installation
 
-For prerequisites and detailed build instructions please read the Evmos [Installation](https://docs.evmos.org/validators/quickstart/installation.html) instructions. Once the dependencies are installed, run:
+Once the dependencies are installed, run:
 
 ```bash
 make install
@@ -54,17 +54,12 @@ Or check out the latest [release](https://github.com/Entangle-Protocol/entangle-
 
 ## Quick Start
 
-To learn how Ethermint works from a high-level perspective, go to the [Introduction](https://docs.evmos.org/about/intro/overview.html) section from the documentation. You can also check the instructions to [Run a Node](https://docs.evmos.org/validators/quickstart/run_node.html).
-
-For an example on how Ethermint can be used on any Cosmos-SDK chain, please refer to [Evmos](https://www.github.com/tharsis/evmos).
+You can check the instructions to [Run a Node](https://entangle-protocol.gitbook.io/welcome/getting-started/infrastructure-guides/run-a-validator-node).
 
 ## Community
 
 The following chat channels and forums are a great spot to ask questions about Ethermint:
 
-- [Evmos Twitter](https://twitter.com/EvmosOrg)
-- [Evmos Discord](https://discord.gg/trje9XuAmy)
-- [Evmos Telegram](https://t.me/EvmosOrg)
 - [Tharsis Twitter](https://twitter.com/TharsisHQ)
 
 ## Contributing
@@ -72,7 +67,3 @@ The following chat channels and forums are a great spot to ask questions about E
 Looking for a good place to start contributing? Check out some [`good first issues`](https://github.com/Entangle-Protocol/entangle-blockchain/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22).
 
 For additional instructions, standards and style guides, please refer to the [Contributing](./CONTRIBUTING.md) document.
-
-## Careers
-
-See our open positions on [Greenhouse](https://boards.eu.greenhouse.io/evmos).
